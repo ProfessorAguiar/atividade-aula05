@@ -5,7 +5,11 @@ function usuarioController(app) {
         res.send('Rota ativada com GET e recurso usuario: lista de usuarios deve ser retornada')
     }
     function inserir(req, res) {
-        res.send('Rota ativada com POST e recurso usuario: usuario deve ser inserido')
+        res.send({
+            "nome":"Vinicius Aguiar",
+            "email":"aguiar.professor@outlook.com"
+        })
+        console.log(req.body)
     }
 }
 export default usuarioController

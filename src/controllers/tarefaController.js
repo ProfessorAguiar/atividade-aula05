@@ -6,6 +6,7 @@ function tarefaController(app) {
     }
     function inserir(req, res) {
         res.send('Rota ativada com POST e recurso tarefa: tarefa deve ser inserida')
+        console.log(req.body)
     }
 }
 export default tarefaController
