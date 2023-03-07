@@ -1,17 +1,14 @@
-import Usuario from '../models/Usuario.js'
+import { bdUsuarios } from '../infra/bd.js'
 function usuarioController(app) {
     app.get('/usuario', listar)
     app.post('/usuario', inserir)
     function listar(req, res) {
-        const user1=new Usuario('Vinicius Aguiar','aguiar@senac.com','123456')
-        res.send('Rota ativada com GET e recurso usuario:')
-        console.log(user1)
+        const usuarios = bdUsuarios
+        // Devolve a lista de Usuarios
+        res.send(usuarios)
     }
     function inserir(req, res) {
-        res.send({
-            "nome":"Vinicius Aguiar",
-            "email":"aguiar.professor@outlook.com"
-        })
+        res.send('Método POST')
         console.log(req.body)
     }
 }
