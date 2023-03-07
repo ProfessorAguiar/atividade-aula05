@@ -4,7 +4,7 @@ import Tarefa from '../models/Tarefa.js'
 const bdUsuarios = []
 const bdTarefas = []
 // Cria um objeto do tipo Usuario e adiciona a lista de usuarios
-const user1 = new Usuario('Nome do usuário 1', 'Email 1', 'Senha 1')
+const user1 = new Usuario('Nome do usuário 1', 'teste', 'Senha 1')
 bdUsuarios.push(user1)
 // Cria um objeto do tipo Usuario e adiciona a lista de usuarios
 const user2 = new Usuario('Nome do usuário 2', 'Email 2', 'Senha 2')
