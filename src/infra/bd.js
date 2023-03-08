@@ -7,7 +7,7 @@ const bdTarefas = []
 const user1 = new Usuario('Nome do usuário 1', 'teste', 'Senha 1')
 bdUsuarios.push(user1)
 // Cria um objeto do tipo Usuario e adiciona a lista de usuarios
-const user2 = new Usuario('Nome do usuário 2', 'Email 2', 'Senha 2')
+const user2 = new Usuario('Nome do usuário 2', 'Resilia', 'Senha 2')
 bdUsuarios.push(user2)
 // Cria um objeto do tipo Tarefa e adiciona a lista de tarefas
 const tarefa1 = new Tarefa('Título da tarefa 1', 'Descrição da tarefa 1', 'A fazer', new Date())
