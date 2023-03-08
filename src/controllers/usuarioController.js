@@ -24,9 +24,7 @@ function usuarioController(app) {
         // Se o usuario for encontrado, devolve o usuario
         res.send(usuario)
     }
-    function name(params) {
-        static
-    } deletar(req, res){
+    function deletar(req, res){
         // Busca o email na lista de usuarios
         const usuario = bdUsuarios.find(usuario => usuario.email === req.params.email)
         // Se o usuario não for encontrado, devolve um erro
