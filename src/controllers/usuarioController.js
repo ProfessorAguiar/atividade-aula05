@@ -20,9 +20,23 @@ function usuarioController(app) {
         })()
     }
     function inserir(req, res) {
+        (async () => {
+            // open the database
+            const db = await open({
+                filename: './src/infra/Tarefas.db',
+                driver: sqlite3.Database
+            })
+            const userAdd = req.body
+            console.log(userAdd)
+            const result = await db.run(
+                `INSERT INTO Usuario(nome,email,senha) 
+                VALUES(?,?,?)`,
+                [userAdd.nome,userAdd.email,userAdd.senha]
+            )
+        })()
+
         res.send('Usuário inserido com sucesso')
-        const userAdd = req.body
-        bdUsuarios.push(userAdd)
+
     }
     function buscarPorEmail(req, res) {
         // Busca o email na lista de usuarios
