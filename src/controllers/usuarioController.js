@@ -1,3 +1,5 @@
+import sqlite3 from 'sqlite3'
+import { open } from 'sqlite'
 import { bdUsuarios } from '../infra/bd.js'
 function usuarioController(app) {
     app.get('/usuario', listar)
@@ -6,31 +8,38 @@ function usuarioController(app) {
     app.delete('/usuario/email/:email', deletar)
     app.put('/usuario/email/:email', atualizar)
     function listar(req, res) {
-        const usuarios = bdUsuarios
-        // Devolve a lista de Usuarios
-        res.send(usuarios)
+        // this is a top-level await 
+        (async () => {
+            // open the database
+            const db = await open({
+                filename: './src/infra/Tarefas.db',
+                driver: sqlite3.Database
+            })
+            const result = await db.all('SELECT * FROM Usuario')
+            res.send(result)
+        })()
     }
     function inserir(req, res) {
         res.send('Usuário inserido com sucesso')
-        const userAdd=req.body
+        const userAdd = req.body
         bdUsuarios.push(userAdd)
     }
-    function buscarPorEmail(req, res){
+    function buscarPorEmail(req, res) {
         // Busca o email na lista de usuarios
-        const usuario = bdUsuarios.find(usuario => 
+        const usuario = bdUsuarios.find(usuario =>
             usuario.email === req.params.email)
         // Se o usuario não for encontrado, devolve um erro
-        if(!usuario){
+        if (!usuario) {
             res.status(404).send('Usuário não encontrado')
         }
         // Se o usuario for encontrado, devolve o usuario
         res.send(usuario)
     }
-    function deletar(req, res){
+    function deletar(req, res) {
         // Busca o email na lista de usuarios
         const usuario = bdUsuarios.find(usuario => usuario.email === req.params.email)
         // Se o usuario não for encontrado, devolve um erro
-        if(!usuario){
+        if (!usuario) {
             res.status(404).send('Usuário não encontrado')
         }
         // Se o usuario for encontrado, deleta o usuario
@@ -39,11 +48,11 @@ function usuarioController(app) {
         // Devolve o usuario deletado
         res.send(usuario)
     }
-    function atualizar(req, res){
+    function atualizar(req, res) {
         // Busca o email na lista de usuarios
         const usuario = bdUsuarios.find(usuario => usuario.email === req.params.email)
         // Se o usuario não for encontrado, devolve um erro
-        if(!usuario){
+        if (!usuario) {
             res.status(404).send('Usuário não encontrado')
         }
         // Se o usuario for encontrado, deleta o usuario
@@ -51,7 +60,7 @@ function usuarioController(app) {
         usuario.email = (req.body.email || usuario.email)
         usuario.senha = (req.body.senha || usuario.senha)
         // Devolve o usuario atualizado
-        res.send({mensagem: 'Usuário alterado com sucesso'})
+        res.send({ mensagem: 'Usuário alterado com sucesso' })
     }
 }
 export default usuarioController

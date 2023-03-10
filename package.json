@@ -1,7 +1,7 @@
 {
   "name": "todoapi",
   "version": "1.0.0",
-  "description": "",
+  "description": "Aula 05 (Back-end) Senac - Politécnico",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -11,9 +11,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "sqlite": "^4.1.2",
+    "sqlite3": "^5.1.4"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProfessorAguiar/atividade-aula05.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/ProfessorAguiar/atividade-aula05/issues"
+  },
+  "homepage": "https://github.com/ProfessorAguiar/atividade-aula05#readme"
 }
