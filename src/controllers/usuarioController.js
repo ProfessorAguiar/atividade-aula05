@@ -31,7 +31,7 @@ function usuarioController(app) {
             const result = await db.run(
                 `INSERT INTO Usuario(nome,email,senha) 
                 VALUES(?,?,?)`,
-                [userAdd.nome,userAdd.email,userAdd.senha]
+                [userAdd.nome, userAdd.email, userAdd.senha]
             )
         })()
 
@@ -40,41 +40,55 @@ function usuarioController(app) {
     }
     function buscarPorEmail(req, res) {
         // Busca o email na lista de usuarios
-        const usuario = bdUsuarios.find(usuario =>
-            usuario.email === req.params.email)
-        // Se o usuario não for encontrado, devolve um erro
-        if (!usuario) {
-            res.status(404).send('Usuário não encontrado')
-        }
-        // Se o usuario for encontrado, devolve o usuario
-        res.send(usuario)
+
+        (async () => {
+            // open the database
+            const db = await open({
+                filename: './src/infra/Tarefas.db',
+                driver: sqlite3.Database
+            })
+            const busca = req.params.email
+            const result = await db.all(`SELECT * FROM Usuario where email like ?`, busca)
+            if (!result) {
+                res.status(404).send('Usuário não encontrado')
+            }
+            // Se o usuario for encontrado, devolve o usuario
+            res.send(result)
+        })()
+
     }
     function deletar(req, res) {
-        // Busca o email na lista de usuarios
-        const usuario = bdUsuarios.find(usuario => usuario.email === req.params.email)
-        // Se o usuario não for encontrado, devolve um erro
-        if (!usuario) {
-            res.status(404).send('Usuário não encontrado')
-        }
-        // Se o usuario for encontrado, deleta o usuario
-        const index = bdUsuarios.indexOf(usuario)
-        bdUsuarios.splice(index, 1)
-        // Devolve o usuario deletado
-        res.send(usuario)
+        (async () => {
+            // open the database
+            const db = await open({
+                filename: './src/infra/Tarefas.db',
+                driver: sqlite3.Database
+            })
+            const busca = req.params.email
+            const result = await db.all(`DELETE FROM Usuario where email like ?`, busca)
+            if (!result) {
+                res.status(404).send('Usuário não encontrado')
+            }
+            // Se o usuario for encontrado, devolve o usuario
+            res.send(result)
+        })()
     }
     function atualizar(req, res) {
-        // Busca o email na lista de usuarios
-        const usuario = bdUsuarios.find(usuario => usuario.email === req.params.email)
-        // Se o usuario não for encontrado, devolve um erro
-        if (!usuario) {
-            res.status(404).send('Usuário não encontrado')
-        }
-        // Se o usuario for encontrado, deleta o usuario
-        usuario.nome = (req.body.nome || usuario.nome)
-        usuario.email = (req.body.email || usuario.email)
-        usuario.senha = (req.body.senha || usuario.senha)
-        // Devolve o usuario atualizado
-        res.send({ mensagem: 'Usuário alterado com sucesso' })
+        (async () => {
+            // open the database
+            const db = await open({
+                filename: './src/infra/Tarefas.db',
+                driver: sqlite3.Database
+            })
+            const busca = req.params.email
+            const result = await db.all(`UPDATE Usuario SET nome=?, eamil=?, senha=? 
+            where email like ?`, req.body.nome, req.body.email, req.body.senha, busca)
+            if (!result) {
+                res.status(404).send('Usuário não encontrado')
+            }
+            res.send({ mensagem: 'Usuário alterado com sucesso' })
+        })()
+
     }
 }
 export default usuarioController
